@@ -66,6 +66,7 @@ Bundle 'mattn/emmet-vim'
 Bundle 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'othree/yajs.vim'
+Plugin 'flazz/vim-colorschemes'
 
 Plugin 'gmarik/Vundle.vim'
 
@@ -99,12 +100,12 @@ endfun
 """""""""""""""""""""""""""""""
 
 "Color Scheme stuffs
-set background=dark
-let g:solarized_termtrans=2
-let g:solarized_contrast="high"
-let g:solarized_visibility="high"
-let g:solarized_termcolors=256
-colorscheme solarized
+" set background=dark
+" let g:solarized_termtrans=2
+" let g:solarized_contrast="high"
+" let g:solarized_visibility="high"
+" let g:solarized_termcolors=256
+colorscheme zenburn
 
 set ruler        "Always show current position
 set cul          "highlight current line
