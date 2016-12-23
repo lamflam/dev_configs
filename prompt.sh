@@ -10,7 +10,6 @@ parse_venv() {
     VENV_PATH=$(pwd | sed -ne 's|'"$VENV_DIR"'\(.*\)|'"$VENV"'\1|p')
     if [ "$VENV_PATH" == "" ]; then
       echo "($VENV)"
-      # pwd | sed -e 's|'"$HOME"'\(.*\)|~\1|' -e 's|\(.*\)|('"$VENV"')\1|'
     else
       pwd | sed -e 's|'"$VENV_DIR"'\(.*\)|('"$VENV"'\1)|' 
     fi
