@@ -65,8 +65,11 @@ Bundle 'lukaszb/vim-web-indent'
 Bundle 'mattn/emmet-vim'
 Bundle 'kien/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
-Plugin 'othree/yajs.vim'
+"Plugin 'othree/yajs.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'airblade/vim-gitgutter'
 
 Plugin 'gmarik/Vundle.vim'
 
@@ -203,10 +206,14 @@ nnoremap <leader>d :VCSVimDiff <cr>
 nnoremap <leader>c :VCSCommit <cr>
 "GIT Status
 nnoremap <leader>s :Gstatus <cr>
+"GIT blame
+nnoremap <leader>b :Gblame <cr>
 "Delete all buffers
 nnoremap <leader>da :bufdo silent! bdelete<cr>
 "CtrlP window
 nnoremap <leader>t :CtrlP<cr>
+"BufExplorer
+nnoremap <leader>e :MBEToggle<cr>
 
 "Change Tab Spacing
 "nnoremap <leader>2 <esc>:set expandtab tabstop=2 softtabstop=2 shiftwidth=2<cr>
@@ -246,10 +253,10 @@ au FileType javascript setl fen
 au FileType javascript setl nocindent
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType javascript autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-autocmd FileType javascript set sw=2
-autocmd FileType javascript set ts=2
-autocmd FileType javascript set sts=2
-autocmd FileType javascript set textwidth=79
+autocmd FileType javascript set sw=4
+autocmd FileType javascript set ts=4
+autocmd FileType javascript set sts=4
+autocmd FileType javascript set textwidth=120
 
 " => Markdown
 au BufNewFile,BufRead *.md set filetype=markdown
