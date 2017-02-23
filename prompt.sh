@@ -6,7 +6,8 @@ function parse_git_dirty {
 }
 
 parse_git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \([a-z]\).*\/[0-9]\{2\}\([0-9]\{4\}\)\/\(.*\)/\1\/\2\/\3/' -e 's/* \(.*\)/\1/'
+  local dirty=$(parse_git_dirty)
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \([a-z]\).*\/[0-9]\{2\}\([0-9]\{4\}\)\/\(.*\)/(\1\/\2\/\3'"$dirty"')/' -e 's/* \(.*\)/(\1'"$dirty"')/'
 }
 
 parse_dir() {
@@ -35,5 +36,5 @@ function resetcolor {
     echo "\\[\\e[0m\\]"
 }
 
-export PS1="$(fgcolor 033)$(boldtext $'$(parse_dir)')$(fgcolor 184) $(boldtext $'($(parse_git_branch)$(parse_git_dirty))')$(resetcolor): "
+export PS1="$(fgcolor 033)$(boldtext $'$(parse_dir)')$(fgcolor 184) $(boldtext $'$(parse_git_branch)')$(resetcolor): "
 export VIRTUAL_ENV_DISABLE_PROMPT=1
