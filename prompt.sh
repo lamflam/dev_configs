@@ -1,38 +1,39 @@
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
 
-parse_git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \([a-z]\).*\/[0-9]\{2\}\([0-9]\{4\}\)\/\(.*\)/[\1\/\2\/\3]/' -e 's/* \(.*\)/[\1]/'
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
 }
 
-parse_venv() {
-  if [ -n "$VIRTUAL_ENV" ]; then
-    VENV_DIR=$(dirname "$VIRTUAL_ENV")
-    VENV=$(basename $VENV_DIR)
-    VENV_PATH=$(pwd | sed -ne 's|'"$VENV_DIR"'\(.*\)|'"$VENV"'\1|p')
-    if [ "$VENV_PATH" == "" ]; then
-      echo "($VENV)"
-    else
-      pwd | sed -e 's|'"$VENV_DIR"'\(.*\)|('"$VENV"'\1)|' 
-    fi
-  fi
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \([a-z]\).*\/[0-9]\{2\}\([0-9]\{4\}\)\/\(.*\)/\1\/\2\/\3/' -e 's/* \(.*\)/\1/'
 }
 
 parse_dir() {
-  if [ -n "$VIRTUAL_ENV" ]; then
+  if [ -z "$VIRTUAL_ENV" ]; then
+    pwd | sed 's|'"$HOME"'\(.*\)|~\1|'
+  else
     VENV_DIR=$(dirname "$VIRTUAL_ENV")
     VENV=$(basename $VENV_DIR)
-    VENV_PATH=$(pwd | sed -ne 's|'"$VENV_DIR"'\(.*\)|'"$VENV"'\1|p')
-  else
-    VENV_PATH=""
-  fi
-  if [ "$VENV_PATH" == "" ]; then
-    pwd | sed -e 's|'"$HOME"'\(.*\)|~\1|'
+    pwd | sed -e 's|'"$VENV_DIR"'\(.*\)|'"$VENV"'\1|' -e 's|'"$HOME"'\(.*\)|~\1|' -e 's|\(.*\)|[\1]|'
   fi
 }
 
-GREEN="\[\033[032m\]"
-CYAN="\[\033[036m\]"
-YELLOW="\[\033[033m\]"
-WHITE="\[\033[00m\]"
+function boldtext {
+    echo "\\[\\033[1m\\]"$1"\\[\\033[0m\\]"
+}
 
-export PS1="$GREEN\$(parse_venv)$CYAN\$(parse_dir)$YELLOW\$(parse_git_branch)$WHITE: "
+function bgcolor {
+    echo "\\[\\033[48;5;"$1"m\\]"
+}
+
+function fgcolor {
+    echo "\\[\\033[38;5;"$1"m\\]"
+}
+
+function resetcolor {
+    echo "\\[\\e[0m\\]"
+}
+
+export PS1="$(fgcolor 033)$(boldtext $'$(parse_dir)')$(fgcolor 184) $(boldtext $'($(parse_git_branch)$(parse_git_dirty))')$(resetcolor): "
 export VIRTUAL_ENV_DISABLE_PROMPT=1
