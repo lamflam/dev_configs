@@ -108,10 +108,10 @@ endfun
 " let g:solarized_contrast="high"
 " let g:solarized_visibility="high"
 " let g:solarized_termcolors=256
-colorscheme zenburn
+" colorscheme zenburn
 
 set ruler        "Always show current position
-set cul          "highlight current line
+" set cul          "highlight current line
 set hlsearch     "highlight search
 set cmdheight=2  "The commandbar height
 set number       "show line numbers
@@ -125,6 +125,8 @@ syntax enable    "Enable syntax hl
 highlight Pmenu ctermbg=8 guibg=#606060
 highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
 highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
+
+hi CursorLine term=NONE cterm=NONE guibg=Grey40
 
 """""""""""""""""""""""""""""""
 "                             "
