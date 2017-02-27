@@ -103,15 +103,15 @@ endfun
 """""""""""""""""""""""""""""""
 
 "Color Scheme stuffs
-" set background=dark
-" let g:solarized_termtrans=2
-" let g:solarized_contrast="high"
-" let g:solarized_visibility="high"
+set background=dark
+let g:solarized_termtrans=2
+let g:solarized_contrast="high"
+let g:solarized_visibility="high"
 " let g:solarized_termcolors=256
-" colorscheme zenburn
+colorscheme solarized
 
 set ruler        "Always show current position
-" set cul          "highlight current line
+set cul          "highlight current line
 set hlsearch     "highlight search
 set cmdheight=2  "The commandbar height
 set number       "show line numbers
@@ -126,7 +126,7 @@ highlight Pmenu ctermbg=8 guibg=#606060
 highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
 highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
 
-hi CursorLine term=NONE cterm=NONE guibg=Grey40
+" hi CursorLine term=NONE cterm=NONE guibg=Grey40
 
 """""""""""""""""""""""""""""""
 "                             "
@@ -283,10 +283,27 @@ set rtp+=$GOROOT/misc/vim
 
 " => scrooloose/syntastic
 let g:syntastic_enable_signs=1
-let g:syntastic_error_symbol="✗"
-let g:syntastic_warning_symbol="⚠"
 let g:syntastic_enable_balloons = 1
 let g:syntastic_enable_highlighting = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+let g:syntastic_javascript_checkers = ['eslint']
+
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 " => fholgado/minibufexpl.vim
 let g:miniBufExplCloseOnSelect = 0
