@@ -2,7 +2,7 @@ export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
 function parse_git_dirty {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working tree clean" ]] && echo "*"
 }
 
 parse_git_branch() {
@@ -36,5 +36,5 @@ function resetcolor {
     echo "\\[\\e[0m\\]"
 }
 
-export PS1="$(fgcolor 033)$(boldtext $'$(parse_dir)')$(fgcolor 184) $(boldtext $'$(parse_git_branch)')$(resetcolor): "
+export PS1="$(fgcolor 033)$(boldtext $'$(parse_dir)')$(fgcolor 184) $(boldtext $'$(parse_git_branch)')$(resetcolor)🥃  "
 export VIRTUAL_ENV_DISABLE_PROMPT=1

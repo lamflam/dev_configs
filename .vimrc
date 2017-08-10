@@ -70,6 +70,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'airblade/vim-gitgutter'
+"Plugin 'flowtype/vim-flow'
 
 Plugin 'gmarik/Vundle.vim'
 
@@ -138,7 +139,7 @@ set history=700                             "Sets how many lines of history VIM 
 set ttimeoutlen=50                          "Speed up O etc in the Terminal
 set autoread                                "Set to auto read when a file is changed from the outside
 set bs=2                                    "allow backspace
-set scrolloff=6                             "start scrolling 5 lines before edge of viewport
+set scrolloff=3                             "start scrolling 5 lines before edge of viewport
 set pastetoggle=<f10>                       "Better paste behavior
 autocmd! bufwritepost vimrc source ~/.vimrc "When vimrc is edited, reload it
 
@@ -181,9 +182,9 @@ set autoindent "auto indent the next line
 
 "Tabs
 "if $WORK
-  set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+"  set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 "else
-"  set tabstop=4 softtabstop=2 shiftwidth=4 expandtab
+  set tabstop=4 softtabstop=2 shiftwidth=4 expandtab
 "endif
 
 "Line Wrapping
@@ -216,6 +217,11 @@ nnoremap <leader>da :bufdo silent! bdelete<cr>
 nnoremap <leader>t :CtrlP<cr>
 "BufExplorer
 nnoremap <leader>e :MBEToggle<cr>
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 "Change Tab Spacing
 "nnoremap <leader>2 <esc>:set expandtab tabstop=2 softtabstop=2 shiftwidth=2<cr>
@@ -275,6 +281,10 @@ au BufNewFile,BufRead *.json set filetype=json
 " => GO Lang
 set rtp+=$GOROOT/misc/vim
 
+" Turn on syntax when entering a buffer
+autocmd BufDelete * syntax on
+let g:miniBufExplForceSyntaxEnable = 1
+
 """""""""""""""""""""""""""""""
 "                             "
 "       Plugin Config         "
@@ -290,11 +300,13 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_warning_symbol = '💩'
+" let g:syntastic_error_symbol = '🛑'
+" let g:syntastic_style_error_symbol = '⚡'
+" let g:syntastic_warning_symbol = '⚠️'
+" let g:syntastic_style_warning_symbol = '💩'
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_python_checkers = ['pep8']
+let g:syntastic_python_pep8_post_args="--max-line-length=120"
 
 highlight link SyntasticErrorSign SignColumn
 highlight link SyntasticWarningSign SignColumn
@@ -368,6 +380,7 @@ let g:pymode_lint_checker = "pep8"
 let g:pymode_lint_options_pep8 = 
     \ {'max_line_length': 120 }
 let g:pymode_options_colorcolumn = 120
+let g:pymode_options_max_line_length = 120
 autocmd FileType python set colorcolumn=120
 
 " Auto check on save
@@ -390,7 +403,7 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 let g:pymode_folding = 0
 
 " Skip .pyc files in NERDTree
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+let NERDTreeIgnore=['\.pyc$', '__pycache__', '\~$'] "ignore files in NERDTree
 
 " YouCompleteMe customizations
 let g:ycm_autoclose_preview_window_after_completion=1
